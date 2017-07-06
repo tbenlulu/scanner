@@ -1,0 +1,53 @@
+#!/usr/bin/env python
+import argparse
+import socket
+import subprocess
+import sys
+
+from datetime import datetime
+
+parser = argparse.ArgumentParser()
+parser.add_argument("dest")
+parser.add_argument("start")
+args = parser.parse_args()
+
+subprocess.call('clear', shell=True)
+
+remoteServerIP  = socket.gethostbyname(args.dest)
+
+print ("-" * 60)
+print ("Please wait, scanning remote host", remoteServerIP)
+print ("-" * 60)
+
+t1 = datetime.now()
+
+try:
+    for port in range(1,5):#1025):
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        result = sock.connect_ex((remoteServerIP, port))
+        if result == 0:
+            print ("Port {}: 	 Open".format(port))
+        else:
+            print ("Port {}: 	 Close".format(port))
+        sock.close()
+
+except KeyboardInterrupt:
+    print ("You pressed Ctrl+C")
+    sys.exit()
+
+except socket.gaierror:
+    print ('Hostname could not be resolved. Exiting')
+    sys.exit()
+
+except socket.error:
+    print ("Couldn't connect to server")
+    sys.exit()
+
+t2 = datetime.now()
+total =  t2 - t1
+print ('Scanning Completed in: ', total)
+
+
+print (args.dest)
+print (args.start)
+
