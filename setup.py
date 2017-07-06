@@ -6,16 +6,15 @@ requires = ['argparse','socket']
 dist = setup(
     name='scanner',
     version='0.0.1',
-    description="A system for controlling process state under UNIX",
-    author="Chris McDonough",
-    author_email="chrism@plope.com",
+    description="A simple port scanner",
+    author="Tamir Ben Lulu",
+    author_email="tbenlulu@email.com",
     packages=find_packages(),
     install_requires=requires,
     zip_safe=False,
-    test_suite="supervisor.tests",
     entry_points={
         'console_scripts': [
-            'scanner = portscan:main',
+            'scanner = scanner:main',
         ],
     },
 )
